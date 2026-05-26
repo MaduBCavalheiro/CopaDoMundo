@@ -1,5 +1,6 @@
 package copa.trabalho;
 
+import java.util.Scanner;  
 import java.util.ArrayList;
 import java.util.Collections;
 
@@ -21,6 +22,8 @@ public class Copa {
         this.nome = nome;
         this.sede = sede;
 
+        Scanner scanner = new Scanner(System.in);
+
         timesAtivos = new ArrayList<>();
         partidas = new ArrayList<>();
         classificados = new ArrayList<>();
@@ -35,14 +38,64 @@ public class Copa {
         System.out.println("5 - Simular Outras Partidas");
         System.out.println("6 - Verificar Campeão");
         System.out.println("7 - Mostrar Classificados");
+
+        int escolha = scanner.nextInt();
+
+        switch(escolha) {
+            case 1:
+                iniciarCopa();
+                break;
+            case 2:
+                gerarRodada();
+                break;
+            case 3:
+                System.out.print("Digite o nome do time: ");
+                String nomeTime = scanner.next();
+                Time novoTime = new Time(nomeTime);
+                adicionarTime(novoTime);
+                break;
+            case 4:
+                System.out.print("\nDigite o nome do primeiro time: \n");
+                String nomeT1 = scanner.next();
+                System.out.print("\nDigite o nome do segundo time: \n");
+                String nomeT2 = scanner.next();
+
+                Time t1 = null, t2 = null;
+                for (Time t : timesAtivos) {
+                    if (t.getNome().equalsIgnoreCase(nomeT1)) {
+                        t1 = t;
+                    }
+                    if (t.getNome().equalsIgnoreCase(nomeT2)) {
+                        t2 = t;
+                    }
+                }
+
+                if (t1 != null && t2 != null) {
+                    partidaJogador(t1, t2);
+                } else {
+                    System.out.println("\nUm ou ambos os times não foram encontrados entre os ativos\n.");
+                }
+                break;
+            case 5:
+                simularOutrasPartidas();
+                break;
+            case 6:
+                verificarCampeao();
+                break;
+            case 7:
+                mostrarClassificados();
+                break;
+            default:
+                System.out.println("\nOpção inválida. Por favor, escolha uma opção entre 1 e 7.\n");
+        }
     }
 
     public void iniciarCopa(){
         if (timesAtivos.size() < 2) {
-            System.out.println("Não há times suficientes para iniciar a copa!");
+            System.out.println("\nNão há times suficientes para iniciar a copa!\n");
             return;
         }
-        System.out.println("Copa iniciada!");
+        System.out.println("\nCopa iniciada!\n");
         gerarRodada();
     }
 
@@ -68,14 +121,14 @@ public class Copa {
 
                 Time folga = timesAtivos.get(i);
                 classificados.add(folga);
-                System.out.println(folga.getNome() + " passou direto nesta rodada (Folga).");
+                System.out.println("\n" + folga.getNome() + " passou direto nesta rodada (Folga).\n");
             }
         }
     }
 
     public void adicionarTime(Time time){
         timesAtivos.add(time);
-        System.out.println("Time " + time.getNome() + " adicionado com sucesso!");
+        System.out.println("\nTime " + time.getNome() + " adicionado com sucesso!\n");
     }
 
     public void partidaJogador(Time time1, Time time2){
@@ -95,7 +148,7 @@ public class Copa {
             classificados.add(vencedor);
             partidas.remove(partidaAlvo); // Remove da lista para não ser simulada de novo aaaaah!!!
         } else {
-            System.out.println("Essa partida não pertence à rodada atual ou já foi jogada.");
+            System.out.println("\nEssa partida não pertence à rodada atual ou já foi jogada.\n");
         }
     }
 
@@ -104,7 +157,7 @@ public class Copa {
         // caso o numero de partidas doa rodada seja ímpar,
         //  o time que teve folga já foi adicionado aos classificados e não precisa ser simulado.
         if (partidas.isEmpty()) {
-            System.out.println("Nenhuma partida gerada para simular.");
+            System.out.println("\nNenhuma partida gerada para simular.\n");
             return;
         }
 
@@ -121,15 +174,15 @@ public class Copa {
         timesAtivos = new ArrayList<>(classificados);
         partidas.clear(); // Limpa as partidas processadas
         
-        System.out.println("Todas as partidas restantes foram simuladas!");
+        System.out.println("\nTodas as partidas restantes foram simuladas!\n");
     }
 
     public void verificarCampeao(){
         if (timesAtivos.size() == 1) {
             campeao = timesAtivos.get(0);
-            System.out.println("⋆✴︎˚｡⋆ O grande campeão é: " + campeao.getNome() + " !!!!!!! ⋆✴︎˚｡⋆");
+            System.out.println("\n⋆✴︎˚｡⋆ O grande campeão é: " + campeao.getNome() + " !!!!!!! ⋆✴︎˚｡⋆\n");
         } else {
-            System.out.println("Ainda restam " + timesAtivos.size() + " times ativos. A Copa não acabou.");
+            System.out.println("\nAinda restam " + timesAtivos.size() + " times ativos. A Copa não acabou.\n");
         }
     }
 
@@ -140,7 +193,7 @@ public class Copa {
                 System.out.println("- " + time.getNome());
             }
         } else {
-            System.out.println("Não há times cadastrados ou ativos.");
+            System.out.println("\nNão há times cadastrados ou ativos.\n");
         }
     }
 }
