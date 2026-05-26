@@ -1,7 +1,8 @@
 package copa.trabalho;
 
-import java.sql.Time;
 import java.util.ArrayList;
+import java.util.Collections;
+
 
 public class Copa {
 
@@ -30,10 +31,11 @@ public class Copa {
 
         System.out.println("1 - Iniciar Copa");
         System.out.println("2 - Gerar Rodada");
-        System.out.println("3 - Partida Jogador");
-        System.out.println("4 - Simular Outras Partidas");
-        System.out.println("5 - Verificar Campeão");
-        System.out.println("6 - Mostrar Classificados");
+        System.out.println("3 - Adicionar Time");
+        System.out.println("4 - Partida Jogador");
+        System.out.println("5 - Simular Outras Partidas");
+        System.out.println("6 - Verificar Campeão");
+        System.out.println("7 - Mostrar Classificados");
     }
 
     public void iniciarCopa(){
@@ -44,6 +46,15 @@ public class Copa {
     }
 
     public void gerarRodada(){
+
+        Collections.shuffle(times);
+
+        for(int i = 0; i < times.size(); i += 2){
+
+            Time t1 = times.get(i);
+            Time t2 = times.get(i + 1);
+
+            System.out.println(t1.getNome() + " x " + t2.getNome());
 
     }
 
