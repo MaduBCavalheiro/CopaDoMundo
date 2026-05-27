@@ -341,7 +341,7 @@ public class Copa {
                 System.out.println("- " + time.getNome());
             }
         } else {
-            System.out.println("\nNão há times cadastrados ou ativos.\n");
+            System.out.println("\n-- Não há times cadastrados ou ativos. --\n");
         }
     }
 }
