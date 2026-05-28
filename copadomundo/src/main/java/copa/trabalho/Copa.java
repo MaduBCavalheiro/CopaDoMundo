@@ -1,28 +1,17 @@
 package copa.trabalho;
 
-<<<<<<< HEAD
-import java.util.ArrayList;
-=======
 import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.Collections;
 
 // Cuidado aqui em cima às vezes importa "java.sql.Time" sem querer sozinho.
 // Mantenha apenas os imports do ArrayList e Collections.
->>>>>>> 7103edad8eb8f7a7a49072ae19f5022ad690a5b5
 
 public class Copa {
 
     private String nome;
     private String sede;
     private Time campeao;
-<<<<<<< HEAD
-
-    private ArrayList<Time> times;
-    private ArrayList<Partida> partidas;
-    private ArrayList<Time> empatados;
-
-=======
     private Time timeDoCoracao;
     private int saldoPontos = 0; //Fiz já a adaptação aceitar a aposta...
     private Aposta apostaAtual;
@@ -33,30 +22,12 @@ public class Copa {
     private ArrayList<Partida> partidas;
     private ArrayList<Time> classificados;
     // Removi a lista 'empatados' já que, em mata-mata (Copa), a classe Partida deve resolver empates internamente.
->>>>>>> 7103edad8eb8f7a7a49072ae19f5022ad690a5b5
 
     public Copa(String nome, String sede) {
 
         this.nome = nome;
         this.sede = sede;
 
-<<<<<<< HEAD
-        times = new ArrayList<>();
-        partidas = new ArrayList<>();
-        empatados = new ArrayList<>();
-    }
-
-    public void menu(){
-
-        System.out.println("--+=====+ mini COPA DO MUNDO +=====+--");
-
-        System.out.println("1 - Iniciar Copa");
-        System.out.println("2 - Gerar Rodada");
-        System.out.println("3 - Partida Jogador");
-        System.out.println("4 - Simular Outras Partidas");
-        System.out.println("5 - Verificar Campeão");
-        System.out.println("6 - Mostrar Classificados");
-=======
         scanner = new Scanner(System.in);
         timesAtivos = new ArrayList<>();
         partidas = new ArrayList<>();
@@ -153,20 +124,10 @@ public class Copa {
         int indice = scanner.nextInt();
         this.timeDoCoracao = timesAtivos.get(indice);
         System.out.println("Você agora torce para: " + timeDoCoracao.getNome() + "!\n");
->>>>>>> 7103edad8eb8f7a7a49072ae19f5022ad690a5b5
     }
 
     public void iniciarCopa(){
 
-<<<<<<< HEAD
-        System.out.println("Copa iniciada!");
-
-        gerarRodada();
-    }
-
-    public void gerarRodada(){
-
-=======
         if (timesAtivos.size() < 2) {
             System.out.println("\nNão há times suficientes para iniciar a copa!\n");
             return;
@@ -239,32 +200,10 @@ public class Copa {
                 }
             }
         }
->>>>>>> 7103edad8eb8f7a7a49072ae19f5022ad690a5b5
     }
 
     public void adicionarTime(Time time){
 
-<<<<<<< HEAD
-        times.add(time);
-    }
-
-    public void partidaJogador(){
-
-    }
-
-    public void simularOutrasPartidas(){
-
-    }
-
-    public void verificarCampeao(){
-
-    }
-
-    public void mostrarClassificados(){
-
-    }
-}
-=======
         timesAtivos.add(time);
         System.out.println("\nTime " + time.getNome() + " adicionado com sucesso!\n");
     }
@@ -406,4 +345,3 @@ public class Copa {
         }
     }
 }
->>>>>>> 7103edad8eb8f7a7a49072ae19f5022ad690a5b5
