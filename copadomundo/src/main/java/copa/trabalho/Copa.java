@@ -124,6 +124,7 @@ public class Copa {
                 System.out.println("\nSeu time foi eliminado. Simulando o restante da competição...");
             }
 
+            // CORREÇÃO: Nome do método alterado para bater com a declaração abaixo
             if (!partidas.isEmpty()) {
                 simularOutrasPartidas();
             }
@@ -263,7 +264,7 @@ public class Copa {
             }
 
             partidas.remove(partidaAlvo); 
-            verificarFimDaRodada(); 
+            verificarFimDaRodada(); // CORREÇÃO: Centraliza a verificação aqui também
 
         } else {
             System.out.println("\nEssa partida não pertence à rodada atual ou já foi jogada.\n");
@@ -286,6 +287,7 @@ public class Copa {
         verificarFimDaRodada();
     }
 
+    // CORREÇÃO: Reinserção do método essencial que consolida a fase e limpa as estruturas de dados
     private void verificarFimDaRodada() {
         if (partidas.isEmpty()) {
             timesAtivos = new ArrayList<>(classificados);
