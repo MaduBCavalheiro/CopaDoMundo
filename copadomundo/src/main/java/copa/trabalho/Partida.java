@@ -20,7 +20,6 @@ public class Partida {
     private boolean encerrada;
     private Time vencedor;
 
-    // Evento especial da partida
     private Evento eventoPartida;
 
     public Partida(Time t1, Time t2) {
@@ -59,9 +58,8 @@ public class Partida {
         return encerrada;
     }
 
-    // RESULTADO DA PARTIDA
+    
     public void gerarResultado() {
-        // Evita gerar resultado duas vezes
         if (encerrada) {
             return;
         }
@@ -74,7 +72,6 @@ public class Partida {
         gerarCartoesRandomicamente();
         gerarEventoPartida();
 
-        // Define vencedor
         if (golsT1 > golsT2) {
             vencedor = t1;
         }
@@ -82,7 +79,6 @@ public class Partida {
             vencedor = t2;
         }
         else {
-            // Mata-mata não permite empate
             System.out.println("\n⚽ Empate no tempo normal!");
             System.out.println("⚽ Decisão nos pênaltis...\n");
 
