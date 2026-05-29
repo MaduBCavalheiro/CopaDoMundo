@@ -11,7 +11,6 @@ public abstract class Evento {
 
     public void exibirEvento() {
         System.out.println("----------------------------------------");
-        System.out.println("[EVENTO] Raro: " + (raridade ? "Sim" : "Não"));
         System.out.println("Descrição: " + descricao);
         System.out.println("----------------------------------------");
     }
