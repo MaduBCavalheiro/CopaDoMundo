@@ -24,7 +24,6 @@ public class Partida {
     private Evento eventoPartida;
 
     public Partida(Time t1, Time t2) {
-
         this.t1 = t1;
         this.t2 = t2;
 
@@ -62,7 +61,6 @@ public class Partida {
 
     // RESULTADO DA PARTIDA
     public void gerarResultado() {
-
         // Evita gerar resultado duas vezes
         if (encerrada) {
             return;
@@ -74,20 +72,16 @@ public class Partida {
         golsT2 = random.nextInt(6);
 
         gerarCartoesRandomicamente();
-
         gerarEventoPartida();
 
         // Define vencedor
         if (golsT1 > golsT2) {
-
             vencedor = t1;
         }
         else if (golsT2 > golsT1) {
-
             vencedor = t2;
         }
         else {
-
             // Mata-mata não permite empate
             System.out.println("\n⚽ Empate no tempo normal!");
             System.out.println("⚽ Decisão nos pênaltis...\n");
@@ -103,58 +97,47 @@ public class Partida {
         encerrada = true;
     }
 
-    // CARTÕES
+
     public void gerarCartoesRandomicamente() {
-
         Random random = new Random();
-
         cartoesAmarelos = random.nextInt(8);
         cartoesVermelhos = random.nextInt(3);
     }
 
-    // EVENTOS DA PARTIDA
+
     public void gerarEventoPartida() {
-
         Random random = new Random();
-
         int chance = random.nextInt(100);
 
-        // 60% chance
-        if (chance < 60) {
 
+        if (chance < 60) {
             eventoPartida = new EventoAbsurdo();
         }
 
-        // 30% chance
         else if (chance < 90) {
-
             eventoPartida = new EventoGenerico();
         }
 
-        // 10% chance
         else {
-
-            eventoPartida = new EventoRivalidade(
-                t1.getNome(),
-                t2.getNome()
-            );
+      
+            if (t1.getNome() != null && t2.getNome() != null && !t1.getNome().isEmpty()) {
+                eventoPartida = new EventoRivalidade(t1.getNome(), t2.getNome());
+            } else {
+                eventoPartida = new EventoGenerico();
+            }
         }
     }
 
-    // VERIFICAÇÃO DE VENCEDOR
+   
     public Time verificarVencedor() {
-
         if (!encerrada) {
             gerarResultado();
         }
-
         return vencedor;
     }
 
-
-    // RELATÓRIO DA PARTIDA
+    
     public void relatorio() {
-
         System.out.println("\n══════════════════════════════════");
         System.out.println("      ⚽ RELATÓRIO DA PARTIDA ⚽");
         System.out.println("══════════════════════════════════");
@@ -171,16 +154,13 @@ public class Partida {
         );
 
         if (golsT1 == golsT2) {
-
             System.out.println("\nEmpate no tempo normal.");
-
             System.out.println(
                 "Vencedor nos pênaltis: " +
                 vencedor.getNome()
             );
         }
         else {
-
             System.out.println(
                 "\nVencedor: " +
                 vencedor.getNome()
@@ -208,13 +188,11 @@ public class Partida {
             cartoesVermelhos
         );
 
-        // Evento especial
+      
         if (eventoPartida != null) {
-
             System.out.println(
                 "\n════ EVENTO DA PARTIDA ════"
             );
-
             eventoPartida.exibirEvento();
         }
 
