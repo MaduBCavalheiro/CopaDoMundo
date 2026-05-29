@@ -2,9 +2,9 @@ package copa.trabalho;
 
 public class Main {
     public static void main(String[] args) {
-        
         Copa miniCopa = new Copa("Mini Copa do Mundo FAI", "Brasil");
 
+        // Carga inicial automatizada
         miniCopa.adicionarTime(new Time("Brasil"));
         miniCopa.adicionarTime(new Time("Argentina"));
         miniCopa.adicionarTime(new Time("França"));
@@ -16,12 +16,8 @@ public class Main {
 
         System.out.println("\n--- Configuração Inicial Concluída com Sucesso! ---");
 
-
-        int opcao = -1;
-        
         while (true) {
             miniCopa.menu();
         }
-
     }
 }

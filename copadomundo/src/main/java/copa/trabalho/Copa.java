@@ -26,13 +26,23 @@ public class Copa {
         classificados = new ArrayList<>();
     }
 
+    // Método auxiliar para limpar a tela visualmente
+    private void limparTela() {
+        for (int i = 0; i < 50; i++) {
+            System.out.println();
+        }
+    }
+
     public void menu(){
-        System.out.println("\n⊹ ࣪ ˖ ⋆𖦹°⚽︎⋆𖦹° ⊹ ࣪ ˖ mini COPA DO MUNDO ⊹ ࣪ ˖ ⋆𖦹°⚽︎⋆𖦹° ⊹ ࣪ ˖");
+        System.out.println("=================================================");
+        System.out.println("               MINI COPA DO MUNDO                ");
+        System.out.println("=================================================");
         System.out.println("1 - Adicionar Time (Cadastrar)");
         System.out.println("2 - Escolher Time do Coração");
         System.out.println("3 - JOGAR COPA DO MUNDO");
         System.out.println("7 - Mostrar Status dos Times Ativos");
         System.out.println("0 - Sair");
+        System.out.println("=================================================");
         System.out.print("Escolha uma opção: ");
 
         int escolha = scanner.nextInt();
@@ -40,29 +50,35 @@ public class Copa {
 
         switch(escolha) {
             case 1:
+                limparTela();
                 System.out.print("Digite o nome do time: ");
                 String nomeTime = scanner.nextLine();  
                 adicionarTime(new Time(nomeTime));
                 break;
 
             case 2:
+                limparTela();
                 if (timesAtivos.isEmpty()) {
-                    System.out.println("\n *+[Erro]+* Cadastre os times primeiro!\n");
+                    System.out.println("\n[ERRO] Cadastre os times primeiro!\n");
                 } else {
                     escolherTimeDoCoracao();
                 }
                 break;
 
             case 3:
+                limparTela();
                 iniciarEExecutarCopa(); 
                 break;
 
             case 7:
+                limparTela();
                 mostrarClassificados();
                 break;
                 
             case 0:
-                System.out.println("\nObrigado por jogar! Até a próxima. ⚽*+*\n");
+                limparTela();
+                System.out.println("\nObrigado por jogar! Até a próxima. *\n");
+                System.exit(0); // CORREÇÃO: Fecha o programa de verdade, quebrando o loop da Main
                 break;
 
             default:
@@ -71,19 +87,21 @@ public class Copa {
     }
 
     public void escolherTimeDoCoracao() {
-        System.out.println("\n⚽︎⋆｡𖦹 ESCOLHA SEU TIME DO CORAÇÃO ⚽︎⋆｡𖦹");
+        System.out.println("========================================");
+        System.out.println("       ESCOLHA SEU TIME DO CORAÇÃO       ");
+        System.out.println("========================================");
         for (int i = 0; i < timesAtivos.size(); i++) {
             System.out.println(i + " - " + timesAtivos.get(i).getNome());
         }
         System.out.print("Digite o número do seu time: ");
         int indice = scanner.nextInt();
-        scanner.nextLine(); // Limpa o buffer do scanner
+        scanner.nextLine(); 
         
         if (indice >= 0 && indice < timesAtivos.size()) {
             this.timeDoCoracao = timesAtivos.get(indice);
-            System.out.println("Você agora torce para: " + timeDoCoracao.getNome() + "!\n");
+            System.out.println("\n[OK] Você agora torce para: " + timeDoCoracao.getNome() + "!\n");
         } else {
-            System.out.println("\nÍndice inválido! Seleção cancelada.\n");
+            System.out.println("\n[ERRO] Índice inválido! Seleção cancelada.\n");
         }
     }
 
@@ -94,7 +112,7 @@ public class Copa {
         }
 
         if (this.timeDoCoracao == null) {
-            System.out.println("\n *+[Aviso]+* Você não escolheu um time do coração anteriormente.");
+            System.out.println("\n[AVISO] Você não escolheu um time do coração anteriormente.");
             escolherTimeDoCoracao();
         }   
 
@@ -116,21 +134,21 @@ public class Copa {
             }
 
             if (partidaDoJogador != null) {
-                System.out.println("\nChegou a hora do seu grande confronto!");
+                System.out.println("\n-> Chegou a hora do seu grande confronto!");
                 partidaJogador(partidaDoJogador.getT1(), partidaDoJogador.getT2());
             } else if (timesAtivos.contains(timeDoCoracao)) {
-                System.out.println("\nSeu time está de folga nesta rodada e assistirá aos demais.");
+                System.out.println("\n[INFO] Seu time está de folga nesta rodada e assistirá aos demais.");
             } else {
-                System.out.println("\nSeu time foi eliminado. Simulando o restante da competição...");
+                System.out.println("\n[INFO] Seu time foi eliminado. Simulando o restante da competição...");
             }
 
-            // CORREÇÃO: Nome do método alterado para bater com a declaração abaixo
             if (!partidas.isEmpty()) {
                 simularOutrasPartidas();
             }
 
             System.out.println("\nPressione ENTER para avançar para a próxima etapa da Copa...");
             scanner.nextLine();
+            limparTela(); // Limpa a tela para a próxima fase do torneio
         }
         
         verificarCampeao();
@@ -141,7 +159,7 @@ public class Copa {
         classificados.clear(); 
 
         if (timesAtivos.contains(timeDoCoracao)) {
-            System.out.println("\n★ Seu time (" + timeDoCoracao.getNome() + ") está vivo na disputa!");
+            System.out.println("\n* Seu time (" + timeDoCoracao.getNome() + ") está vivo na disputa!");
             System.out.println("Escolha seu oponente para esta fase:");
             
             ArrayList<Time> possiveisOponentes = new ArrayList<>(timesAtivos);
@@ -202,7 +220,7 @@ public class Copa {
         int escolhaTime = scanner.nextInt();
         Time timeApostado = (escolhaTime == 1) ? t1 : t2;
 
-        System.out.println("\n +* Qual o seu palpite? *+ \n");
+        System.out.println("\n+* Qual o seu palpite? *+");
         System.out.println("1 - Vitória | 2 - Derrota | 3 - Empate");
         int palpite = scanner.nextInt();
         
@@ -235,8 +253,6 @@ public class Copa {
 
             if (vencedor != null) {
                 classificados.add(vencedor);
-            } else {
-                System.out.println("Aviso: Empate detectado no mata-mata. Certifique-se de tratar os pênaltis!");
             }
 
             if (apostaAtual != null) {
@@ -255,19 +271,19 @@ public class Copa {
 
                 if (acertou) {
                     saldoPontos += valor;
-                    System.out.println("\n*+*+* Você ACERTOU a aposta! Ganhou " + valor + " pontos. Saldo atual: " + saldoPontos);
+                    System.out.println("\n[POSTA] Você ACERTOU! Ganhou " + valor + " pontos. Saldo: " + saldoPontos);
                 } else {
                     saldoPontos -= valor;
-                    System.out.println("\nx°x Você ERROU a aposta! Perdeu " + valor + " pontos. Saldo atual: " + saldoPontos);
+                    System.out.println("\n[APOSTA] Você ERROU! Perdeu " + valor + " pontos. Saldo: " + saldoPontos);
                 }
                 apostaAtual = null; 
             }
 
             partidas.remove(partidaAlvo); 
-            verificarFimDaRodada(); // CORREÇÃO: Centraliza a verificação aqui também
+            verificarFimDaRodada();
 
         } else {
-            System.out.println("\nEssa partida não pertence à rodada atual ou já foi jogada.\n");
+            System.out.println("\nEssa partida não pertence à rodada atual.\n");
         }
     }
 
@@ -282,32 +298,35 @@ public class Copa {
             }
             partidas.remove(partida); 
         }
-        // CORREÇÃO: Tirada a barra invertida dupla que quebrava o print
-        System.out.println("\n✴︎˚｡ Todas as outras partidas da rodada foram computadas nos bastidores!");
+        System.out.println("\n[SISTEMA] Todas as outras partidas foram simuladas nos bastidores!");
         verificarFimDaRodada();
     }
 
-    // CORREÇÃO: Reinserção do método essencial que consolida a fase e limpa as estruturas de dados
     private void verificarFimDaRodada() {
         if (partidas.isEmpty()) {
             timesAtivos = new ArrayList<>(classificados);
-            System.out.println("\n ⚡︎ ⋆｡°⚽︎⋆｡° ⚡︎ Todas as partidas desta fase foram concluídas! 'Times Ativos' atualizados. ⚡︎ ⋆｡°⚽︎⋆｡° ⚡︎");
+            System.out.println("\n--- Rodada concluída! Lista de times ativos atualizada. ---");
         }
     }
 
     public void verificarCampeao(){
         if (timesAtivos.size() == 1) {
             campeao = timesAtivos.get(0);
-            System.out.println("\n⋆✴︎˚｡⋆ O grande campeão é: " + campeao.getNome() + " !!!!!!! ⋆✴︎˚｡⋆\n");
+            System.out.println("\n=================================================");
+            System.out.println("  O GRANDE CAMPEÃO DA COPA É: " + campeao.getNome().toUpperCase());
+            System.out.println("=================================================\n");
         }
     }
 
     public void mostrarClassificados(){
         if (!timesAtivos.isEmpty()) {
-            System.out.println("\n⚡︎ ⋆｡𖦹°⚽︎⋆｡𖦹° ⚡︎ Times Ativos / Classificados ⚡︎ ⋆｡𖦹°⚽︎⋆｡𖦹° ⚡︎");
+            System.out.println("========================================");
+            System.out.println("      TIMES ATIVOS NA COMPETIÇÃO       ");
+            System.out.println("========================================");
             for (Time time : timesAtivos) {
                 System.out.println("- " + time.getNome());
             }
+            System.out.println("========================================");
         } else {
             System.out.println("\n-- Não há times cadastrados ou ativos. --\n");
         }
