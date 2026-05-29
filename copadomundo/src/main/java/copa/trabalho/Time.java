@@ -10,7 +10,7 @@ public class Time {
     
 
     public Time(String nome){
-      this.tecnico = null;
+        this.tecnico = null;
         this.SaldoGols = 0;
         this.CartoesAmarelos = 0;
         this.CartoesVermelhos = 0;
