@@ -1,12 +1,13 @@
 package copa.trabalho;
 
 import java.util.Scanner;
+import java.sql.Time;
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Random;
 
 public class Copa {
 
-    private String nome;
     private String sede;
     private Time campeao;
     private Time timeDoCoracao;
@@ -16,17 +17,18 @@ public class Copa {
     private ArrayList<Time> timesAtivos;
     private ArrayList<Partida> partidas;
     private ArrayList<Time> classificados;
+    private ArrayList<Estadio> estadiosDisponiveis;
 
-    public Copa(String nome, String sede) {
-        this.nome = nome;
+    public Copa(String sede) {
         this.sede = sede;
-        scanner = new Scanner(System.in);
-        timesAtivos = new ArrayList<>();
-        partidas = new ArrayList<>();
-        classificados = new ArrayList<>();
+        this.scanner = new Scanner(System.in);
+        this.timesAtivos = new ArrayList<>();
+        this.partidas = new ArrayList<>();
+        this.classificados = new ArrayList<>();
+        this.estadiosDisponiveis = new ArrayList<>(); 
     }
 
-    // Método auxiliar para limpar a tela visualmente
+    
     private void limparTela() {
         for (int i = 0; i < 50; i++) {
             System.out.println();
@@ -78,7 +80,7 @@ public class Copa {
             case 0:
                 limparTela();
                 System.out.println("\nObrigado por jogar! Até a próxima. *\n");
-                System.exit(0); // CORREÇÃO: Fecha o programa de verdade, quebrando o loop da Main
+                System.exit(0); 
                 break;
 
             default:
@@ -148,7 +150,7 @@ public class Copa {
 
             System.out.println("\nPressione ENTER para avançar para a próxima etapa da Copa...");
             scanner.nextLine();
-            limparTela(); // Limpa a tela para a próxima fase do torneio
+            limparTela(); 
         }
         
         verificarCampeao();
@@ -179,7 +181,8 @@ public class Copa {
             }
             
             Time oponenteEscolhido = possiveisOponentes.get(escolhaOp);
-            partidas.add(new Partida(timeDoCoracao, oponenteEscolhido));
+            
+            partidas.add(new Partida(timeDoCoracao, oponenteEscolhido, sortearEstadio()));
 
             ArrayList<Time> restoDosTimes = new ArrayList<>(timesAtivos);
             restoDosTimes.remove(timeDoCoracao);
@@ -188,7 +191,7 @@ public class Copa {
             Collections.shuffle(restoDosTimes);
             for (int i = 0; i < restoDosTimes.size(); i += 2) {
                 if (i + 1 < restoDosTimes.size()) {
-                    partidas.add(new Partida(restoDosTimes.get(i), restoDosTimes.get(i + 1)));
+                    partidas.add(new Partida(restoDosTimes.get(i), restoDosTimes.get(i + 1), sortearEstadio()));
                 } else {
                     Time folga = restoDosTimes.get(i);
                     classificados.add(folga);
@@ -199,7 +202,7 @@ public class Copa {
             Collections.shuffle(timesAtivos);
             for (int i = 0; i < timesAtivos.size(); i += 2) {
                 if (i + 1 < timesAtivos.size()) {
-                    partidas.add(new Partida(timesAtivos.get(i), timesAtivos.get(i + 1)));
+                    partidas.add(new Partida(timesAtivos.get(i), timesAtivos.get(i + 1), sortearEstadio()));
                 } else {
                     classificados.add(timesAtivos.get(i));
                 }
@@ -210,6 +213,34 @@ public class Copa {
     public void adicionarTime(Time time){
         timesAtivos.add(time);
         System.out.println("\nTime " + time.getNome() + " adicionado com sucesso!\n");
+    }
+
+    public void adicionarEstadio(Estadio estadio) {
+        if (estadio != null) {
+            this.estadiosDisponiveis.add(estadio);
+        }
+    }
+
+    private Estadio sortearEstadio() {
+        if (estadiosDisponiveis.isEmpty()) {
+            return null;
+        }
+
+        ArrayList<Estadio> estadiosDaSede = new ArrayList<>();
+        for (Estadio e : estadiosDisponiveis) {
+            
+            if (e.getPais() != null && e.getPais().getNome().equalsIgnoreCase(this.sede)) {
+                estadiosDaSede.add(e);
+            }
+        }
+
+        
+        Random rand = new Random();
+        if (!estadiosDaSede.isEmpty()) {
+            return estadiosDaSede.get(rand.nextInt(estadiosDaSede.size()));
+        } else {
+            return estadiosDisponiveis.get(rand.nextInt(estadiosDisponiveis.size()));
+        }
     }
 
     public void realizarAposta(Time t1, Time t2) {
