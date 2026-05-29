@@ -97,29 +97,29 @@ public class Partida {
         encerrada = true;
     }
 
-
+    // CARTÕES
     public void gerarCartoesRandomicamente() {
         Random random = new Random();
         cartoesAmarelos = random.nextInt(8);
         cartoesVermelhos = random.nextInt(3);
     }
 
-
+    // EVENTOS DA PARTIDA
     public void gerarEventoPartida() {
         Random random = new Random();
         int chance = random.nextInt(100);
 
-
+        // 60% chance
         if (chance < 60) {
             eventoPartida = new EventoAbsurdo();
         }
-
+        // 30% chance
         else if (chance < 90) {
             eventoPartida = new EventoGenerico();
         }
-
+        // 10% chance
         else {
-      
+            // CORREÇÃO/PROTEÇÃO: Só gera rivalidade se os nomes forem válidos
             if (t1.getNome() != null && t2.getNome() != null && !t1.getNome().isEmpty()) {
                 eventoPartida = new EventoRivalidade(t1.getNome(), t2.getNome());
             } else {
@@ -128,7 +128,7 @@ public class Partida {
         }
     }
 
-   
+    // VERIFICAÇÃO DE VENCEDOR
     public Time verificarVencedor() {
         if (!encerrada) {
             gerarResultado();
@@ -136,7 +136,7 @@ public class Partida {
         return vencedor;
     }
 
-    
+    // RELATÓRIO DA PARTIDA
     public void relatorio() {
         System.out.println("\n══════════════════════════════════");
         System.out.println("      ⚽ RELATÓRIO DA PARTIDA ⚽");
@@ -188,7 +188,7 @@ public class Partida {
             cartoesVermelhos
         );
 
-      
+        // Evento especial
         if (eventoPartida != null) {
             System.out.println(
                 "\n════ EVENTO DA PARTIDA ════"
